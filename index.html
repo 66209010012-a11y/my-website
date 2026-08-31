@@ -1,0 +1,3245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wat Kaew Korawaram</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: #07111c;
+        }
+
+
+        /* =================================
+           LOADER
+        ================================= */
+
+/* =================================
+   RESPONSIVE LOADER
+================================= */
+
+#loader {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    z-index: 99999;
+
+    background: #07111c;
+
+    opacity: 1;
+    transform: scale(1);
+
+    transition:
+        opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =================================
+   LOADER IMAGE
+================================= */
+
+#loader img {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center center;
+
+    transform: scale(1);
+
+    transition:
+        transform 1.6s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1.2s ease;
+}
+
+
+/* =================================
+   LOADER HIDE
+================================= */
+
+#loader.hide {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(12px);
+
+    pointer-events: none;
+}
+
+#loader.hide img {
+    transform: scale(1.12);
+    filter: blur(4px);
+}
+
+
+/* =================================
+   LOADING TEXT
+================================= */
+
+.loading-text {
+    position: absolute;
+
+    left: 50%;
+    bottom: clamp(180px, 28vh, 320px);
+
+    transform: translateX(-50%);
+
+    /* สำคัญ */
+    width: max-content;
+    max-width: 95vw;
+
+    padding:
+        clamp(9px, 1.2vw, 16px)
+        clamp(14px, 2vw, 30px);
+
+    color: rgba(255, 255, 255, 0.95);
+
+    font-family: Arial, sans-serif;
+
+    font-size: clamp(18px, 3vw, 48px);
+
+    font-weight: 500;
+
+    letter-spacing: clamp(1px, 0.35vw, 4px);
+
+    line-height: 1.25;
+
+    text-align: center;
+
+    /* สำคัญ */
+    white-space: nowrap;
+
+    background: rgba(255, 255, 255, 0.10);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.20);
+
+    border-radius: 999px;
+
+    backdrop-filter:
+        blur(12px)
+        saturate(140%);
+
+    -webkit-backdrop-filter:
+        blur(12px)
+        saturate(140%);
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 0, 0, 0.5);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
+
+    opacity: 0;
+
+    animation:
+        welcomeText
+        1.5s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        0.4s
+        forwards;
+}
+
+
+/* =================================
+   LOADING CIRCLE
+================================= */
+
+.glass-loader {
+    position: absolute;
+
+    left: 50%;
+
+    /*
+       ไม่ใช้ bottom แบบค่าตายตัว
+       อิงจากตำแหน่งข้อความ
+    */
+    bottom: clamp(90px, 17vh, 190px);
+
+    width: clamp(45px, 5vw, 62px);
+    height: clamp(45px, 5vw, 62px);
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    backdrop-filter:
+        blur(15px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(15px)
+        saturate(160%);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.35);
+
+    opacity: 0;
+
+    animation:
+        glassLoaderAppear
+        1.2s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        0.6s
+        forwards;
+}
+
+
+.glass-loader::before {
+    content: "";
+
+    width: 70%;
+    height: 70%;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            rgba(255,255,255,0.15) 80deg,
+            rgba(255,255,255,0.95) 140deg,
+            transparent 200deg
+        );
+
+    -webkit-mask:
+        radial-gradient(
+            farthest-side,
+            transparent calc(100% - 3px),
+            #000 calc(100% - 2px)
+        );
+
+    mask:
+        radial-gradient(
+            farthest-side,
+            transparent calc(100% - 3px),
+            #000 calc(100% - 2px)
+        );
+
+    animation:
+        liquidSpin 1s linear infinite;
+
+    filter:
+        drop-shadow(
+            0 0 6px
+            rgba(255,255,255,0.7)
+        );
+}
+
+
+/* =================================
+   WELCOME TEXT ANIMATION
+================================= */
+
+@keyframes welcomeText {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translate(-50%, 25px);
+
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translate(-50%, 0);
+
+        filter: blur(0);
+    }
+}
+
+
+
+
+        @keyframes glassLoaderAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(-50%)
+                    translateY(35px)
+                    scale(0.75);
+
+                filter: blur(8px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(-50%)
+                    translateY(0)
+                    scale(1);
+
+                filter: blur(0);
+            }
+        }
+
+
+        @keyframes liquidSpin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        #loader.hide .glass-loader {
+
+            opacity: 0;
+
+            transform:
+                translateX(-50%)
+                translateY(-20px)
+                scale(0.8);
+
+            filter: blur(8px);
+
+            transition:
+                opacity 0.7s ease,
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.7s ease;
+        }
+
+
+        #loader.hide .loading-text {
+
+            opacity: 0;
+
+            transform:
+                translate(-50%, -20px);
+
+            filter: blur(8px);
+
+            transition:
+                opacity 0.7s ease,
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.7s ease;
+        }
+
+
+        /* =================================
+           360 VIEWER
+        ================================= */
+
+        #viewer360 {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 100000;
+
+            background: #050b12;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform: scale(1.05);
+
+            filter: blur(10px);
+
+            transition:
+                opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 1s ease,
+                visibility 0s linear 1s;
+        }
+
+
+        #viewer360.active {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform: scale(1);
+
+            filter: blur(0);
+
+            transition:
+                opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 1s ease;
+        }
+
+
+        #panorama {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            cursor: grab;
+
+            touch-action: none;
+        }
+
+
+        #panorama:active {
+
+            cursor: grabbing;
+        }
+
+
+        /* =================================
+           360 TOP BAR
+        ================================= */
+
+        .viewer-top {
+
+            position: absolute;
+
+            top: 25px;
+            left: 25px;
+            right: 25px;
+
+            z-index: 10;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 16px;
+
+            letter-spacing: 3px;
+
+            pointer-events: none;
+        }
+
+
+        /* =================================
+           CLOSE BUTTON
+        ================================= */
+
+        #close360 {
+
+            pointer-events: auto;
+
+            width: 50px;
+            height: 50px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.25);
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.10);
+
+            backdrop-filter: blur(15px);
+
+            color: white;
+
+            font-size: 30px;
+
+            cursor: pointer;
+
+            transition:
+                transform .3s ease,
+                background .3s ease;
+        }
+
+
+        #close360:hover {
+
+            transform:
+                rotate(90deg)
+                scale(1.1);
+
+            background:
+                rgba(255,255,255,.2);
+        }
+
+
+        /* =================================
+           HINT
+        ================================= */
+
+        .viewer-hint {
+
+            position: absolute;
+
+            bottom: 35px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            padding: 12px 22px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,.2);
+
+            border-radius: 999px;
+
+            backdrop-filter: blur(12px);
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            white-space: nowrap;
+        }
+
+
+        /* =================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 480px) {
+
+    .loading-text {
+
+        width: max-content;
+
+        max-width: 95vw;
+
+        font-size: clamp(16px, 5vw, 23px);
+
+        letter-spacing: 1px;
+
+        padding: 10px 16px;
+
+        border-radius: 25px;
+
+        bottom: 25vh;
+        }
+
+        .glass-loader {
+            bottom: 14vh;
+
+            width: 48px;
+            height: 48px;
+        }
+    }
+            
+
+
+        /* =================================
+   360 NAVIGATION HOTSPOT
+================================= */
+
+/* =================================
+   360 NAVIGATION HOTSPOT
+================================= */
+
+.hotspot {
+    position: absolute;
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.45);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.22),
+            rgba(255,255,255,.06)
+        );
+
+    backdrop-filter:
+        blur(15px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(15px)
+        saturate(160%);
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 20;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.25),
+        inset 0 1px 2px rgba(255,255,255,.45),
+        0 0 25px rgba(255,255,255,.15);
+
+    transform:
+        translate(-50%, -50%);
+
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1),
+        background .35s ease,
+        box-shadow .35s ease;
+}
+
+/* =================================
+   INFO HOTSPOT
+   ปุ่มข้อมูลสถานที่
+================================= */
+
+.info-hotspot {
+    position: absolute;
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.20),
+            rgba(255,255,255,.06)
+        );
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    z-index: 25;
+
+    transform: translate(-50%, -50%);
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.25),
+        inset 0 1px 2px rgba(255,255,255,.4);
+
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1),
+        background .35s ease,
+        box-shadow .35s ease;
+}
+
+
+/* ไอคอนด้านใน */
+.info-hotspot::before {
+    content: "✦";
+
+    font-size: 18px;
+
+    filter:
+        drop-shadow(
+            0 0 6px
+            rgba(255,255,255,.7)
+        );
+
+    transition:
+        transform .35s ease;
+}
+
+
+/* วงแหวนด้านใน */
+.info-hotspot::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 6px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+}
+
+
+/* Hover */
+.info-hotspot:hover {
+    transform:
+        translate(-50%, -50%)
+        scale(1.15);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.32),
+            rgba(255,255,255,.12)
+        );
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.3),
+        inset 0 1px 3px rgba(255,255,255,.55),
+        0 0 30px rgba(255,255,255,.25);
+}
+
+
+.info-hotspot:hover::before {
+    transform:
+        rotate(90deg)
+        scale(1.15);
+}
+
+
+/* ตอนกด */
+.info-hotspot:active {
+    transform:
+        translate(-50%, -50%)
+        scale(.9);
+}
+
+
+/* Animation */
+@keyframes infoHotspotPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 0
+            rgba(255,255,255,.25);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 14px
+            rgba(255,255,255,0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0
+            rgba(255,255,255,0);
+    }
+}
+
+
+.info-hotspot {
+    animation:
+        infoHotspotPulse 2.5s infinite;
+}
+
+
+/* ลูกศร */
+.hotspot::before {
+    content: "";
+
+    width: 14px;
+    height: 14px;
+
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+
+    transform: rotate(45deg);
+
+    filter:
+        drop-shadow(0 0 5px rgba(255,255,255,.7));
+
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+
+/* วงแหวนด้านนอก */
+.hotspot::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    transition:
+        transform .4s ease,
+        opacity .4s ease;
+}
+
+
+/* Hover */
+.hotspot:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.35),
+            rgba(255,255,255,.12)
+        );
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.15);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.3),
+        inset 0 1px 3px rgba(255,255,255,.55),
+        0 0 35px rgba(255,255,255,.35);
+}
+
+
+.hotspot:hover::before {
+    transform:
+        rotate(45deg)
+        translate(3px, -3px);
+}
+
+
+.hotspot:hover::after {
+    transform: scale(1.15);
+    opacity: .5;
+}
+
+
+/* ตอนกด */
+.hotspot:active {
+    transform:
+        translate(-50%, -50%)
+        scale(.9);
+}
+
+
+/* Pulse */
+@keyframes hotspotPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(255,255,255,.35);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 18px rgba(255,255,255,0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(255,255,255,0);
+    }
+}
+
+.hotspot {
+    animation:
+        hotspotPulse 2.5s infinite;
+}
+
+/*CSS สำหรับหน้าประวัติ*/
+#historyModal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 200000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .4s ease,
+        visibility .4s ease;
+}
+
+#historyModal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.history-box {
+
+    position: relative;
+
+    width: min(700px, 85vw);
+    max-height: 75vh;
+
+    overflow-y: auto;
+
+    padding: 45px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255, 255, 255, 0.12);
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    backdrop-filter:
+        blur(25px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(150%);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 1px 2px rgba(255,255,255,.3);
+
+    color: white;
+
+    transform:
+        translateY(30px)
+        scale(.92);
+
+    opacity: 0;
+
+    transition:
+        transform .5s cubic-bezier(.22,1,.36,1),
+        opacity .4s ease;
+}
+
+/* =================================
+   INFO MODAL
+================================= */
+
+#infoModal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 250000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .4s ease,
+        visibility .4s ease;
+}
+
+
+/* เปิด Modal */
+
+#infoModal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* กล่องข้อมูล */
+
+.info-box {
+
+    position: relative;
+
+    width: min(650px, 85vw);
+
+    max-height: 75vh;
+
+    overflow-y: auto;
+
+    padding: 45px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    backdrop-filter:
+        blur(25px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(150%);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 1px 2px rgba(255,255,255,.3);
+
+    color: white;
+
+    transform:
+        translateY(30px)
+        scale(.92);
+
+    opacity: 0;
+
+    transition:
+        transform .5s cubic-bezier(.22,1,.36,1),
+        opacity .4s ease;
+}
+
+
+/* Animation ตอนเปิด */
+
+#infoModal.active .info-box {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    opacity: 1;
+}
+
+
+/* เนื้อหา */
+
+.info-content {
+    font-family: Arial, sans-serif;
+}
+
+
+/* หัวข้อเล็ก */
+
+.info-label {
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    opacity: .65;
+}
+
+
+/* หัวข้อหลัก */
+
+.info-content h1 {
+
+    margin:
+        10px 0 20px;
+
+    font-size:
+        clamp(28px, 4vw, 45px);
+
+    font-weight: 500;
+}
+
+
+/* เส้น */
+
+.info-line {
+
+    width: 60px;
+
+    height: 2px;
+
+    margin-bottom: 25px;
+
+    background:
+        rgba(255,255,255,.8);
+}
+
+
+/* เนื้อหา */
+
+.info-content p {
+
+    font-size: 16px;
+
+    line-height: 1.9;
+
+    color:
+        rgba(255,255,255,.85);
+
+    margin-bottom: 18px;
+}
+
+
+/* ปุ่มปิด */
+
+#closeInfo {
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    background:
+        rgba(255,255,255,.10);
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease,
+        background .3s ease;
+}
+
+
+#closeInfo:hover {
+
+    transform:
+        rotate(90deg)
+        scale(1.1);
+
+    background:
+        rgba(255,255,255,.25);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .info-box {
+
+        width: 90vw;
+
+        max-height: 80vh;
+
+        padding: 30px 25px;
+
+        border-radius: 22px;
+    }
+
+    .info-content p {
+
+        font-size: 14px;
+
+        line-height: 1.8;
+    }
+}
+
+#historyModal.active .history-box {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    opacity: 1;
+}
+
+
+.history-content {
+    font-family: Arial, sans-serif;
+}
+
+
+.history-label {
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    opacity: .65;
+}
+
+
+.history-content h1 {
+
+    margin:
+        10px 0 20px;
+
+    font-size:
+        clamp(28px, 4vw, 45px);
+
+    font-weight: 500;
+}
+
+
+.history-line {
+
+    width: 60px;
+    height: 2px;
+
+    margin-bottom: 25px;
+
+    background:
+        rgba(255,255,255,.8);
+}
+
+
+.history-content p {
+
+    font-size: 16px;
+
+    line-height: 1.9;
+
+    color:
+        rgba(255,255,255,.85);
+
+    margin-bottom: 18px;
+}
+
+
+#closeHistory {
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    background:
+        rgba(255,255,255,.10);
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease,
+        background .3s ease;
+}
+
+#closeHistory:hover {
+
+    transform:
+        rotate(90deg)
+        scale(1.1);
+
+    background:
+        rgba(255,255,255,.25);
+}
+
+
+@media (max-width: 600px) {
+
+    .history-box {
+
+        width: 90vw;
+
+        max-height: 80vh;
+
+        padding: 30px 25px;
+
+        border-radius: 22px;
+    }
+
+    .history-content p {
+
+        font-size: 14px;
+
+        line-height: 1.8;
+    }
+}
+
+#history360 {
+    pointer-events: auto;
+
+    width: 50px;
+    height: 50px;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.10);
+
+    backdrop-filter: blur(15px);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease,
+        background .3s ease;
+}
+
+#history360:hover {
+    transform: scale(1.1);
+
+    background:
+        rgba(255,255,255,.2);
+}
+
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+
+    .loading-text {
+        width: 90vw;
+
+        font-size: clamp(17px, 5vw, 23px);
+
+        letter-spacing: 1px;
+
+        padding: 10px 16px;
+
+        border-radius: 25px;
+
+        bottom: 25vh;
+    }
+
+    .glass-loader {
+        bottom: 14vh;
+
+        width: 48px;
+        height: 48px;
+    }
+}
+
+
+/* =================================
+   TABLET
+================================= */
+
+@media (min-width: 481px) and (max-width: 1024px) {
+
+    .loading-text {
+        width: 80vw;
+
+        font-size: clamp(22px, 4vw, 36px);
+
+        bottom: 27vh;
+    }
+
+    .glass-loader {
+        bottom: 17vh;
+    }
+}
+
+
+/* =================================
+   LANDSCAPE MOBILE
+================================= */
+
+@media (max-height: 500px) {
+
+    .loading-text {
+        bottom: 22vh;
+
+        font-size: clamp(16px, 3vw, 25px);
+    }
+
+    .glass-loader {
+        bottom: 8vh;
+
+        width: 44px;
+        height: 44px;
+    }
+}
+
+
+/* =================================
+   LARGE / ULTRAWIDE SCREEN
+================================= */
+
+@media (min-width: 1600px) {
+
+    .loading-text {
+        width: min(60vw, 1000px);
+
+        font-size: clamp(35px, 2.5vw, 52px);
+    }
+}
+
+
+/*language*/
+.language-switcher {
+
+    position: fixed;
+
+    top: 27px;
+    right: 100px;
+
+    z-index: 300000;
+
+    display: flex;
+    gap: 6px;
+
+    padding: 5px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    backdrop-filter:
+        blur(15px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(15px)
+        saturate(160%);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25),
+
+        inset 0 1px 2px
+        rgba(255, 255, 255, 0.25);
+}
+
+
+.language-switcher button {
+
+    border: none;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        .3s ease;
+}
+
+
+.language-switcher button:hover {
+
+    background:
+        rgba(255, 255, 255, 0.15);
+
+    color: white;
+
+    transform: scale(1.05);
+}
+
+
+/* =================================
+   LANGUAGE SWITCHER ANIMATION
+================================= */
+
+.language-switcher {
+    opacity: 0;
+
+    transform:
+        translateY(-20px)
+        scale(0.9);
+
+    filter: blur(8px);
+
+    animation:
+        languageAppear
+        0.9s
+        cubic-bezier(.22,1,.36,1)
+        4s
+        forwards;
+}
+
+
+@keyframes languageAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-20px)
+            scale(0.9);
+
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter: blur(0);
+    }
+}
+
+.language-switcher button {
+    transition:
+        transform .3s cubic-bezier(.22,1,.36,1),
+        background .3s ease,
+        color .3s ease,
+        filter .3s ease;
+}
+
+
+.language-switcher button:active {
+    transform: scale(.88);
+    filter: blur(1px);
+}
+
+.stairs-audio-button {
+    margin-top: 10px;
+    padding: 12px 20px;
+
+    border-radius: 999px;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    background:
+        rgba(255,255,255,.10);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease,
+        background .3s ease;
+}
+
+.stairs-audio-button:hover {
+    transform: scale(1.05);
+
+    background:
+        rgba(255,255,255,.20);
+}
+
+.stairs-audio-button:active {
+    transform: scale(.95);
+}
+
+
+
+.audio-player {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.audio-time {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: rgba(255,255,255,.65);
+
+    font-size: 13px;
+}
+
+#audioProgress {
+    width: 100%;
+    height: 5px;
+
+    margin-bottom: 15px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.20);
+
+    cursor: pointer;
+}
+
+#audioProgress::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 10px rgba(255,255,255,.5);
+}
+
+#audioProgress::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+.stairs-audio-button {
+    padding: 12px 20px;
+
+    border-radius: 999px;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    background: rgba(255,255,255,.10);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.stairs-audio-button:hover {
+    background: rgba(255,255,255,.20);
+    transform: scale(1.05);
+}
+
+.stairs-audio-button:active {
+    transform: scale(.95);
+}
+
+#infoDescription {
+    white-space: pre-line;
+}
+
+    </style>
+</head>
+
+
+<body>
+    <audio id="welcomeSound" preload="auto">
+        <source src="../Vts/sound/rakang.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="stairsSoundTH" preload="auto">
+        <source src="../Vts/sound/thstair.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="stairsSoundEN" preload="auto">
+        <source src="../Vts/sound/enstair.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="templeSoundTH" preload="auto">
+        <source src="../Vts/sound/thentrance.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="templeSoundEN" preload="auto">
+        <source src="../Vts/sound/enentrance.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="language-switcher">
+        <button onclick="setLanguage('th')">
+            TH
+        </button>
+
+        <button onclick="setLanguage('en')">
+            EN
+        </button>
+    </div>
+
+
+    <!-- =================================
+         LOADING
+    ================================= -->
+
+    <div id="loader">
+
+        <img
+            src="image/logo.png"
+            alt="Loading"
+        >
+
+        <div class="glass-loader"></div>
+
+        <div class="loading-text">
+            <span>
+                Welcome to Wat Kaew Korawaram
+            </span>
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================
+         MAIN WEBSITE
+    ================================= -->
+
+    <div id="main-content">
+
+    </div>
+
+
+
+    <!-- =================================
+         360 VIEWER
+    ================================= -->
+
+    <div id="viewer360">
+
+        <div class="viewer-top">
+
+            <span>
+                360° VIEW
+            </span>
+
+            <button id="history360">
+                i
+            </button>
+
+        </div>
+
+
+        <div id="panorama"></div>
+
+
+        <div class="viewer-hint" data-i18n="hint"></div>
+
+    </div>
+
+    <div id="historyModal">
+
+    <div class="history-box">
+
+        <button id="closeHistory">
+            ×
+        </button>
+
+        <div class="history-content">
+
+            <span class="history-label">
+                HISTORY
+            </span>
+
+            <h1 data-i18n="templeName"></h1>
+
+            <div class="history-line"></div>
+
+            <p data-i18n="history1"></p>
+
+            <p data-i18n="history2"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================
+     INFO MODAL
+================================= -->
+
+<div id="infoModal">
+
+    <div class="info-box">
+
+        <button id="closeInfo">
+            ×
+        </button>
+
+        <div class="info-content">
+
+            <span class="info-label">
+                HISTORY
+            </span>
+
+            <h1 id="infoTitle">
+                บันไดวัดแก้วโกรวาราม
+            </h1>
+
+            <div class="info-line"></div>
+
+            <p id="infoDescription"></p>
+
+        <div class="audio-player">
+            <div class="audio-time">
+                <span id="audioCurrentTime">0:00</span>
+                <span id="audioDuration">0:00</span>
+            </div>
+
+            <input
+                type="range"
+                id="audioProgress"
+                min="0"
+                max="100"
+                value="0"
+            >
+
+            <button id="stairsAudioButton" class="stairs-audio-button">
+                🔊 เปิดเสียงบรรยาย
+            </button>
+        </div>
+            
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    <!-- =================================
+         THREE.JS
+    ================================= -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+
+    <script>
+        const translations = {
+        th: {
+            welcome: "ยินดีต้อนรับสู่วัดแก้วโกรวาราม",
+            view360: "ชมภาพ 360°",
+            hint: "🖱️ ลากเพื่อหมุนภาพ 360°",
+            history: "ประวัติ",
+            templeName: "วัดแก้วโกรวาราม",
+            history1:"เป็นพระอารามหลวง ชั้นตรีชนิดสามัญ และเป็นวัดประจำจังหวัดกระบี่ ซึ่งวัดนี้สร้างเมื่อ พ.ศ.๒๔๔๓ โดยมีเนื้อที่ประมาณ 220 ไร่ ตั้งอยู่ที่ใจกลางเมืองจังหวัดกระบี่ ทางเข้าของวัดอยู่ฝั่งถนนมหาราช (เยื้องห้างโวค และสี่แยกมนุษยโบราณ) ซึ่งนอกจากว่าวัดนี้จะตั้งอยู่ใจกลางเมืองแล้ว นอกจากนี้วัดนี้ยังเป็นศูนย์กลางพระพุทธศาสนาและศูนย์กลางการศึกษาพระปริยัติธรรมของคณะสงฆ์จังหวัดกระบี่ มาตั้งแต่พุทธศักราช 2455 จนถึงปัจจุบัน อีกทั้งยังเป็นสถานที่เรียนรู้และจัดกิจกรรมทางพระพุทธศาสนาของจังหวัดกระบี่และที่สำคัญ วัดแห่งนี้เนื่องในวโรกาสที่พระบาทสมเด็จพระเจ้าอยู่หัวพระชนม์มายุครบ 6 รอบ และได้มีการถวายผ้าพระกฐินพระราชทานเป็นประจำทุกปีลักษณะภายนอกของวัดแก้วโกรวาราม ถือได้ว่าเป็นสถาปัตยกรรมศาสนา ที่มีการสร้างใหม่และออกแบบได้อย่างสวยงามมากโดยเฉพาะพระอุโบสถสีขาวหลังใหญ่ โดยพระอุโบสถหลังดังกล่าวจะตั้งอยู่บนเนินดิน ทางเดินขึ้นบันไดเป็นลานเรียบๆ ก่อนที่จะขึ้นบันไดช่วงสุดท้ายที่เริ่มจะเพิ่มระดับความชันตามสภาพภูมิประเทศ ภาพที่เห็นในตอนนี้เป็นภาพที่สวยงามมากครับ เสาโคมไฟรอบทางเดินก็สวยลงตัวกับแบบของอุโบสถ หากพูดถึงเฉพาะบันไดก่อนเข้าชมในอุโบสถแล้ว ที่นี้จะมีการแบ่งบันไดเป็น 3 ช่วง ซึ่งแต่ช่วงก็จะเป็นบันไดลวดลายพญานาค เต็มไปด้วยความสวยงามและมีรายละเอียดของงานที่ละเอียดอ่อนมากเลยส่วนภายในของพระอุโบสถ เมื่อเข้ามาก็จะพบพระประธานองค์ใหญ่ ส่วนด้านฝาผนังก็จะมีจิตรกรรมฝาผนังที่สวยงามมาก ภาพจิตรกรรมฝาผนังรอบด้าน ประกอบไปด้วยภาพสำคัญ ๆ ดังนี้ พระแม่ธรณีบีบมวยผม, พระศาสดาประสูติ, พระโพธิสัตว์ประทับเสวยรมย์ อยู่บนสวรรค์ชั้นดุสิต ก่อนเสด็จลงมาเป็นพระพุทธเจ้า",
+            history2:"ภายในบริเวณวัดมีอาคารและพื้นที่สำคัญหลายแห่งซึ่งสะท้อนถึงศิลปวัฒนธรรมและวิถีชีวิตของชุมชนในพื้นที่"
+        },
+        en: {
+            welcome: "Welcome to Wat Kaew Korawaram",
+            view360: "360° VIEW",
+            hint: "🖱️ Drag to rotate the 360° image",
+            history: "HISTORY",
+            templeName: "Wat Kaew Korawaram",
+            history1:"Kaew Korawaram Temple is a third-class royal temple of the ordinary type and serves as the provincial temple of Krabi Province. The temple was established in **1900** and covers an area of approximately **220 rai**. It is located in the heart of Krabi city. The entrance to the temple is on Maharaj Road, opposite Vogue Shopping Center and the intersection known as the “Ancient Human” intersection.In addition to being situated in the center of the city, the temple has served as an important center of Buddhism and Buddhist education for the Sangha of Krabi Province since 1912 until the present day. It is also an important place for learning about Buddhism and for organizing Buddhist activities in Krabi Province. Furthermore, on the occasion of **His Majesty the King’s sixth-cycle birthday anniversary**, a royal Kathin robe offering ceremony has been held at the temple every year.The exterior of Kaew Korawaram Temple is considered an impressive example of religious architecture. The temple has been newly constructed and beautifully designed, particularly its large **white ordination hall (Ubosot)**. The ordination hall is situated on elevated ground. The walkway leading to the hall begins with a flat area before reaching the final section of stairs, which becomes steeper according to the natural terrain.The view of the temple is very beautiful. The decorative lamp posts along the walkway complement the architectural style of the ordination hall perfectly. The stairs leading to the ordination hall are divided into **three sections**, each decorated with intricate **Naga serpent designs**. The craftsmanship is highly detailed and reflects the beauty of traditional Thai religious art.Inside the ordination hall visitors will find a large principal Buddha image. The walls are decorated with beautiful murals depicting important scenes from Buddhist history and teachings. These murals include Mae Thorani wringing water from her hair the birth of the Buddha and the Bodhisattva enjoying heavenly pleasures in Tushita Heaven before descending to Earth to become the Buddha.",
+            history2:"Within the temple grounds, there are also many important buildings and areas that reflect the local art, culture, traditions, and way of life of the community."
+        }
+        };
+
+        function setLanguage(language) {
+
+    currentLanguage = language;
+
+    // เปลี่ยนข้อความหน้าเว็บ
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+
+        const key = element.dataset.i18n;
+
+        element.textContent =
+            translations[language][key];
+    });
+
+    // ถ้ากำลังเปิดหน้าข้อมูลอยู่
+    // ให้หยุดเสียงเดิมและเปลี่ยนเป็นภาษาปัจจุบัน
+    if (currentInfoType) {
+
+        const wasPlaying =
+            !stairsSoundTH.paused ||
+            !stairsSoundEN.paused;
+
+        resetInfoAudio();
+
+        updateInfoModalLanguage();
+
+        // ถ้าเสียงกำลังเล่นอยู่ ให้เล่นเสียงภาษาใหม่ต่อ
+        if (
+            wasPlaying,
+            currentInfoType === "stairs"
+        ) {
+
+            const audio =
+                getCurrentInfoSound();
+
+            newAudio.play()
+                .then(() => {
+
+                    stairsAudioButton.textContent =
+                        "🔇 ปิดเสียงบรรยาย";
+
+                })
+                .catch(error => {
+
+                    console.error(
+                        "ไม่สามารถเล่นเสียงได้:",
+                        error
+                    );
+
+                });
+        }
+
+    } else {
+
+        updateInfoModalLanguage();
+
+    }
+}
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const viewer =
+            document.getElementById("viewer360");
+
+        const panorama =
+            document.getElementById("panorama");
+
+        const history360 =
+            document.getElementById("history360");
+
+        const historyModal =
+            document.getElementById("historyModal");
+
+        const closeHistory =
+            document.getElementById("closeHistory");
+
+        const closeInfo =
+            document.getElementById("closeInfo");
+
+        const infoModal =
+            document.getElementById("infoModal");
+
+        const stairsSoundTH =
+            document.getElementById("stairsSoundTH");
+
+        const stairsSoundEN =
+            document.getElementById("stairsSoundEN");
+
+        const templeSoundTH =
+            document.getElementById("templeSoundTH");
+
+        const templeSoundEN =
+            document.getElementById("templeSoundEN");
+
+        const stairsAudioButton =
+            document.getElementById("stairsAudioButton");
+
+        const audioProgress =
+            document.getElementById("audioProgress");
+
+        const audioCurrentTime =
+            document.getElementById("audioCurrentTime");
+
+        const audioDuration =
+            document.getElementById("audioDuration");
+
+
+        let scene;
+        let camera;
+        let renderer;
+        let sphere;
+
+        let isDragging = false;
+
+        let previousX = 0;
+        let previousY = 0;
+
+        let rotationX = 0;
+        let rotationY = 0;
+        let hotspots = [];
+        let currentLanguage = "th";
+        let currentInfoType = null;
+        let currentTexture = null;
+        let currentGeometry = null;
+        let currentMaterial = null;
+
+
+
+function formatTime(seconds) {
+
+    if (isNaN(seconds)) {
+        return "0:00";
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secs =
+        Math.floor(seconds % 60);
+
+    return minutes + ":" +
+        String(secs).padStart(2, "0");
+}
+
+function getCurrentInfoSound() {
+
+    if (currentInfoType === "temple") {
+
+        if (currentLanguage === "en") {
+            return templeSoundEN;
+        }
+
+        return templeSoundTH;
+    }
+
+    // stairs
+    if (currentLanguage === "en") {
+        return stairsSoundEN;
+    }
+
+    return stairsSoundTH;
+}
+
+
+function resetInfoAudio() {
+
+    stairsSoundTH.pause();
+    stairsSoundEN.pause();
+
+    templeSoundTH.pause();
+    templeSoundEN.pause();
+
+    stairsSoundTH.currentTime = 0;
+    stairsSoundEN.currentTime = 0;
+
+    templeSoundTH.currentTime = 0;
+    templeSoundEN.currentTime = 0;
+
+    audioProgress.value = 0;
+    audioCurrentTime.textContent = "0:00";
+    audioDuration.textContent = "0:00";
+
+    stairsAudioButton.textContent =
+        "🔊 เปิดเสียงบรรยาย";
+}
+
+
+function updateAudioTime() {
+
+    const audio =
+    getCurrentInfoSound();
+
+    if (!audio.duration) {
+        return;
+    }
+
+    const percent =
+        (audio.currentTime / audio.duration) * 100;
+
+    audioProgress.value = percent;
+
+    audioCurrentTime.textContent =
+        formatTime(audio.currentTime);
+
+    audioDuration.textContent =
+        formatTime(audio.duration);
+}
+
+
+stairsSoundTH.addEventListener(
+    "timeupdate",
+    updateAudioTime
+);
+
+
+stairsSoundEN.addEventListener(
+    "timeupdate",
+    updateAudioTime
+);
+
+
+stairsSoundTH.addEventListener(
+    "loadedmetadata",
+    updateAudioTime
+);
+
+
+stairsSoundEN.addEventListener(
+    "loadedmetadata",
+    updateAudioTime
+);
+
+
+templeSoundTH.addEventListener(
+    "timeupdate",
+    updateAudioTime
+);
+
+templeSoundEN.addEventListener(
+    "timeupdate",
+    updateAudioTime
+);
+
+templeSoundTH.addEventListener(
+    "loadedmetadata",
+    updateAudioTime
+);
+
+templeSoundEN.addEventListener(
+    "loadedmetadata",
+    updateAudioTime
+);
+
+
+stairsSoundTH.addEventListener(
+    "ended",
+    function() {
+
+        stairsAudioButton.textContent =
+            "🔊 เปิดเสียงบรรยาย";
+
+        audioProgress.value = 100;
+
+    }
+);
+
+
+stairsSoundEN.addEventListener(
+    "ended",
+    function() {
+
+        stairsAudioButton.textContent =
+            "🔊 เปิดเสียงบรรยาย";
+
+        audioProgress.value = 100;
+
+    }
+);
+
+
+templeSoundTH.addEventListener(
+    "ended",
+    function() {
+
+        stairsAudioButton.textContent =
+            "🔊 เปิดเสียงบรรยาย";
+
+        audioProgress.value = 100;
+    }
+);
+
+templeSoundEN.addEventListener(
+    "ended",
+    function() {
+
+        stairsAudioButton.textContent =
+            "🔊 เปิดเสียงบรรยาย";
+
+        audioProgress.value = 100;
+    }
+);
+
+audioProgress.addEventListener(
+    "input",
+    function() {
+
+        const audio =
+            getCurrentInfoSound();
+
+        if (!audio.duration) {
+            return;
+        }
+
+        audio.currentTime =
+            (audioProgress.value / 100) *
+            audio.duration;
+
+    }
+);
+
+
+stairsAudioButton.onclick =
+    function(e) {
+
+        e.stopPropagation();
+
+        const audio =
+            getCurrentInfoSound();
+
+        if (audio.paused) {
+
+            audio.play()
+                .then(() => {
+
+                    stairsAudioButton.textContent =
+                        "🔇 ปิดเสียงบรรยาย";
+
+                })
+                .catch(error => {
+
+                    console.error(
+                        "ไม่สามารถเล่นเสียงได้:",
+                        error
+                    );
+
+                });
+
+        } else {
+
+            audio.pause();
+
+            stairsAudioButton.textContent =
+                "🔊 เปิดเสียงบรรยาย";
+        }
+
+    };
+
+
+        /*del360*/
+        function cleanup360() {
+
+    hotspots.forEach(h => {
+        h.element.remove();
+    });
+
+    hotspots = [];
+
+    if (sphere) {
+
+        scene.remove(sphere);
+
+        if (sphere.geometry) {
+            sphere.geometry.dispose();
+        }
+
+        if (sphere.material) {
+
+            if (sphere.material.map) {
+                sphere.material.map.dispose();
+            }
+
+            sphere.material.dispose();
+        }
+
+        sphere = null;
+    }
+
+    if (renderer) {
+
+        renderer.dispose();
+
+        renderer.domElement.remove();
+
+        renderer = null;
+    }
+
+    scene = null;
+    camera = null;
+}
+
+
+
+        /* =================================
+           OPEN 360
+        ================================= */
+
+        function open360(imagePath, startRotation = 0) {
+        
+        cleanup360();
+
+        rotationX = startRotation;
+        rotationY = 0;
+
+        hotspots = [];
+
+            viewer.classList.add("active");
+
+            panorama.innerHTML = "";
+
+            scene =
+                new THREE.Scene();
+
+
+            camera =
+                new THREE.PerspectiveCamera(
+                    75,
+                    window.innerWidth /
+                    window.innerHeight,
+                    1,
+                    2000
+                );
+
+
+            camera.position.set(
+                0,
+                0,
+                0.1
+            );
+
+
+            renderer =
+                new THREE.WebGLRenderer({
+                    antialias: true
+                });
+
+
+            renderer.setPixelRatio(
+            Math.min(window.devicePixelRatio, 2)
+            );
+
+
+            renderer.setSize(
+                window.innerWidth,
+                window.innerHeight
+            );
+
+
+            panorama.appendChild(
+                renderer.domElement
+            );
+
+            renderer.domElement.style.position = "absolute";
+            renderer.domElement.style.inset = "0";
+
+
+            /* โหลดภาพ */
+
+            const loader =
+                new THREE.TextureLoader();
+
+
+            loader.load(
+
+                imagePath,
+
+                function(texture) {
+
+                    const geometry =
+                        new THREE.SphereGeometry(
+                            500,
+                            60,
+                            40
+                        );
+
+
+                    /*
+                        กลับด้าน Sphere
+                        เพื่อให้มองจากด้านใน
+                    */
+
+                    geometry.scale(
+                        -1,
+                        1,
+                        1
+                    );
+
+
+                    const material =
+                        new THREE.MeshBasicMaterial({
+                            map: texture
+                        });
+
+
+                    sphere =
+                        new THREE.Mesh(
+                            geometry,
+                            material
+                        );
+
+
+                    scene.add(
+                        sphere
+                    );
+
+                    /* จุดวาร์ป */
+                    if (imagePath === "panorama/stiar.jpg") {
+
+                    // ปุ่มที่ 1
+                    addHotspot(
+                        "panorama/stieg.png",
+                        new THREE.Vector3(100, -10, 100),
+                        Math.PI * 1.2
+                    );
+
+                    // ปุ่มที่ 2
+                    addHotspot(
+                        "panorama/front.png",
+                        new THREE.Vector3(-100, 0, -350),
+                        Math.PI *1.3
+                    );
+
+                    // ✦ ปุ่มข้อมูลบันได
+                    addInfoHotspot(
+                        new THREE.Vector3(-1200, -200, 0),
+                        "stairs"
+                    );
+
+                }
+
+                else if (imagePath === "panorama/stieg.png") {
+
+                    // ปุ่มของภาพ stieg
+                    addHotspot(
+                        "panorama/stiar.jpg",
+                        new THREE.Vector3(-1000, 150, 1700),
+                        Math.PI *1.55
+                    );
+
+                }
+
+                else if (imagePath === "panorama/front.png") {
+
+                    // ปุ่มของภาพ front
+                    addHotspot(
+                        "panorama/stiar.jpg",
+                        new THREE.Vector3(600, -400, -400),
+                        Math.PI *1.55
+                    );
+
+                    addHotspot(
+                        "panorama/entrance.png",
+                        new THREE.Vector3(-100, 0, 100),
+                        Math.PI *0.8
+                    );
+
+                }
+
+                else if (imagePath === "panorama/entrance.png") {
+
+                    // ปุ่มของภาพ front
+                    addHotspot(
+                        "panorama/front.png",
+                        new THREE.Vector3(200, 100, -400),
+                        Math.PI *1.3
+                    );
+                    
+                    // ✦ ปุ่มข้อมูลบริเวณวัด
+                    addInfoHotspot(
+                        new THREE.Vector3(100, -100, 200),
+                        "temple"
+                    );
+                }
+
+                },
+
+                undefined,
+
+                function(error) {
+
+                    console.error(
+                        "โหลดภาพ 360° ไม่สำเร็จ",
+                        error
+                    );
+
+                }
+            );
+
+        }
+        
+        /*hotpot*/
+        function addHotspot(targetImage, position, targetRotation = 0) {
+
+    const button = document.createElement("button");
+
+    button.className = "hotspot";
+
+    button.innerHTML = "";
+
+    button.onclick = function(e) {
+
+        e.stopPropagation();
+
+        open360(targetImage, targetRotation);
+
+    };
+
+    panorama.appendChild(button);
+
+    hotspots.push({
+        element: button,
+        position: position.clone()
+    });
+}
+
+
+
+/* =================================
+   INFO HOTSPOT
+   ปุ่มข้อมูลสถานที่
+================================= */
+
+function addInfoHotspot(position, type) {
+
+    const button = document.createElement("button");
+
+    button.className = "info-hotspot";
+
+    button.setAttribute(
+        "aria-label",
+        "ข้อมูลสถานที่"
+    );
+
+    button.onclick = function(e) {
+
+    e.stopPropagation();
+
+    currentInfoType = type;
+
+    const infoModal =
+        document.getElementById("infoModal");
+
+    const infoTitle =
+        document.getElementById("infoTitle");
+
+    const infoDescription =
+        document.getElementById("infoDescription");
+
+
+    if (type === "stairs") {
+
+        if (currentLanguage === "th") {
+            infoTitle.textContent =
+                "บันไดวัดแก้วโกรวาราม";
+
+            infoDescription.textContent =
+                "ความโดดเด่นของวัด\n"+
+                "เมื่อมาถึงบริเวณด้านหน้าพระอุโบสถ สิ่งหนึ่งที่สะดุดตาคือบันไดทางขึ้นที่ทอดยาวขึ้นไปบนเนินดิน บันไดแห่งนี้แบ่งออกเป็น 3 ช่วงและได้รับการตกแต่งอย่างประณีตด้วยลวดลายพญานาค ซึ่งเป็นเอกลักษณ์ ที่ช่วยสร้างความโดดเด่นให้กับ พระอุโบสถของวัดแก้วโกรวาราม\n\n"+
+                "ลวดลายพญานาค\n"+
+                "บริเวณบันไดทั้งสามช่วง ได้รับการตกแต่งด้วยลวดลายพญานาคที่มีรายละเอียดประณีต พญานาคถือเป็นสัญลักษณ์ที่พบได้บ่อยในงานศิลปกรรมทางพระพุทธศาสนาและมักปรากฏบริเวณทางเข้าสู่ศาสนสถานโดยช่วยสร้างความรู้สึกถึงความศักดิ์สิทธิ์และความสง่างามของพื้นที่\n\n"+
+                "นี่คือบันได แต่ทําไมถึงใช้พญานาค\n"+
+                "ในคติความเชื่อทางพระพุทธศาสนา พญานาคเป็นสัตว์ในตำนานที่มีความเกี่ยวข้องกับ พระพุทธศาสนา และ มักถูกนำ มาใช้เป็นองค์ ประกอบในการตกแต่งศาสนสถาน โดยเฉพาะบริเวณบันไดหรือทางเข้าสู่อาคาร เพื่อสื่อถึงการเดินทางเข้าสู่พื้นที่ศักดิ์สิทธิ์ ดังนั้นบันไดพญานาคจึงไม่ได้มีเพียงความสวยงาม แต่ยังช่วยสร้างบรรยากาศและแสดงความรู้สึกเคารพต่อสถานที่ทางพระพุทธศาสนา";
+        } else {
+            infoTitle.textContent =
+                "Stairs of Wat Kaew Korawaram";
+
+            infoDescription.textContent =
+                "Distinctive Features of the Temple\n"+
+                "One of the most eye-catching features in front of the ordination hall is the long staircase leading up the hill. The staircase is divided into three sections and decorated with intricate Naga motifs, adding beauty and uniqueness to Kaew Korawaram Temple.\n\n"+
+                "Naga Motifs\n"+
+                "The three sections feature detailed Naga designs. The Naga is a common symbol in Buddhist art, often found at the entrances of religious sites. It represents sacredness, dignity, and elegance.\n\n"+
+                "Why Are Naga Motifs Used on the Staircase?\n"+
+                "This is the staircase, but why are Naga motifs used here?\n"+
+                "The Naga is a mythical creature associated with Buddhism and is commonly used in Buddhist architecture, especially on staircases and entrances. It symbolizes the journey from the ordinary world into a sacred space.";
+
+        }
+
+    }
+
+    if (type === "temple") {
+        if (currentLanguage === "th") {
+
+            infoTitle.textContent =
+                "พระอุโบสถ";
+
+            infoDescription.textContent =
+                "จุดเด่นของพระอุโบสถ\n"+
+                "เบื้องหน้าคือพระอุโบสถสีขาวหลังใหญ่ หนึ่งในจุดเด่นด้านสถาปัตยกรรมของวัดแก้วโกรวาราม ตัวอาคารตั้งอยู่บนเนินดิน ทำให้ดูโดดเด่นและสง่างามเมื่อมองจากด้านล่าง โดยรอบมีเสาโคมไฟที่ออกแบบให้กลมกลืนกับรูปแบบของพระอุโบสถ\n"+
+                "เมื่อเข้ามาภายใน สิ่งแรกที่ดึงดูดสายตาคือ พระประธานปางมารวิชัย ซึ่งประดิษฐานอยู่ภายในพระอุโบสถ สามารถหยุดชมรายละเอียดขององค์พระและบรรยากาศโดยรอบ ก่อนเดินชมจิตรกรรมฝาผนังที่อยู่โดยรอบ\n"+
+                "จิตรกรรมเหล่านี้ไม่ได้มีไว้เพียงเพื่อความสวยงาม แต่ยังทำหน้าที่ถ่ายทอดเรื่องราวและคติความเชื่อทางพระพุทธศาสนา เปรียบเสมือนหนังสือที่เล่าเรื่องผ่านภาพ โดยมีเรื่องราวสำคัญ เช่น พระแม่ธรณีบีบมวยผม การประสูติของพระศาสดา และพระโพธิสัตว์บนสวรรค์ชั้นดุสิต\n"+
+                "ภาพ พระแม่ธรณีบีบมวยผม เล่าถึงเหตุการณ์ก่อนพระพุทธเจ้าตรัสรู้ เมื่อพญามารเข้ามาขัดขวางการบำเพ็ญเพียร พระแม่ธรณีจึงปรากฏกายและบีบมวยผม ปล่อยสายน้ำจากบุญกุศลที่สะสมไว้ จนสามารถเอาชนะเหล่ามารได้ สื่อถึงพลังของความดีและบุญกุศล\n"+
+                "ภาพ การประสูติของพระศาสดา ถ่ายทอดเรื่องราวการประสูติของเจ้าชายสิทธัตถะ พระราชโอรสของพระเจ้าสุทโธทนะและพระนางสิริมหามายา ณ สวนลุมพินีวัน ซึ่งถือเป็นจุดเริ่มต้นของพุทธประวัติและเส้นทางสู่การตรัสรู้\n"+
+                "ส่วนภาพ พระโพธิสัตว์บนสวรรค์ชั้นดุสิต แสดงถึงช่วงเวลาก่อนที่พระโพธิสัตว์จะเสด็จลงมาประสูติเป็นเจ้าชายสิทธัตถะ ตามคติทางพระพุทธศาสนา พระองค์ประทับอยู่บนสวรรค์ชั้นดุสิต ก่อนเสด็จลงมายังโลกมนุษย์เพื่อบำเพ็ญพระบารมีและตรัสรู้เป็นพระพุทธเจ้า\n"+
+                "ดังนั้น เมื่อเดินชมพระอุโบสถแห่งนี้ อย่ามองเพียงความสวยงามของสถาปัตยกรรม แต่ลองสังเกตเรื่องราวบนผนัง เพราะทุกภาพล้วนมีความหมายและช่วยให้เราเรียนรู้พุทธประวัติผ่านงานจิตรกรรมได้อย่างน่าสนใจ";
+
+        } else {
+            infoTitle.textContent =
+                "inside the ordination hall";
+
+            infoDescription.textContent =
+                "In front of you is the large white ordination hall, one of the architectural highlights of Wat Kaew Korawaram. The building stands on an elevated area, making it look especially impressive and elegant when viewed from below. Around the hall, you can also notice a series of lamp posts designed to blend beautifully with the architecture.\n"+
+                "As you enter the hall, the first thing that catches your attention is the large principal Buddha image in the Mara-Vijaya posture. You can take a moment to admire the details of the Buddha image and the peaceful atmosphere before looking around at the murals on the walls."+
+                "The walls are covered with beautiful Buddhist paintings. These murals are not only decorative, but also tell important stories and beliefs in Buddhism. They can be seen as a visual book that allows visitors to learn about Buddhist history through art."+
+                "One important mural is “Mother Earth Wringing Her Hair.” According to Buddhist tradition, before the Buddha attained enlightenment, Mara and his followers tried to disturb his meditation. Mother Earth appeared and wrung the water from her hair, representing the accumulated merit of people’s good deeds. The flowing water defeated the forces of Mara and symbolized the power of goodness and merit overcoming obstacles."+
+                "Another important scene is the Birth of the Buddha, depicting the birth of Prince Siddhartha, the son of King Suddhodana and Queen Maya, at Lumbini Garden. This event marks the beginning of the Buddha’s life story and his journey toward enlightenment."+
+                "You can also see the Bodhisattva in Tushita Heaven. According to Buddhist belief, before being born as Prince Siddhartha, the Bodhisattva resided in Tushita Heaven. When the time was right, he descended to the human world to fulfill his path and eventually attain enlightenment as the Buddha."+
+                "As you walk around the ordination hall, take a closer look at the murals. Each painting has its own meaning and helps tell the story of Buddhism through art, making the visit more than just an appreciation of the building’s beauty.";
+
+
+        }
+    }
+
+
+    infoModal.classList.add("active");
+
+};
+
+    panorama.appendChild(button);
+
+    hotspots.push({
+
+        element: button,
+
+        position: position.clone()
+
+    });
+}
+
+
+function updateInfoModalLanguage() {
+
+    if (!currentInfoType) return;
+
+    const infoTitle =
+        document.getElementById("infoTitle");
+
+    const infoDescription =
+        document.getElementById("infoDescription");
+
+
+    if (currentInfoType === "stairs") {
+
+        if (currentLanguage === "th") {
+
+            infoTitle.textContent =
+                "บันไดวัดแก้วโกรวาราม";
+
+            infoDescription.textContent =
+                "ความโดดเด่นของวัด\n"+
+                "เมื่อมาถึงบริเวณด้านหน้าพระอุโบสถ สิ่งหนึ่งที่สะดุดตาคือบันไดทางขึ้นที่ทอดยาวขึ้นไปบนเนินดิน บันไดแห่งนี้แบ่งออกเป็น 3 ช่วงและได้รับการตกแต่งอย่างประณีตด้วยลวดลายพญานาค ซึ่งเป็นเอกลักษณ์ ที่ช่วยสร้างความโดดเด่นให้กับ พระอุโบสถของวัดแก้วโกรวาราม\n\n"+
+                "ลวดลายพญานาค\n"+
+                "บริเวณบันไดทั้งสามช่วง ได้รับการตกแต่งด้วยลวดลายพญานาคที่มีรายละเอียดประณีต พญานาคถือเป็นสัญลักษณ์ที่พบได้บ่อยในงานศิลปกรรมทางพระพุทธศาสนาและมักปรากฏบริเวณทางเข้าสู่ศาสนสถานโดยช่วยสร้างความรู้สึกถึงความศักดิ์สิทธิ์และความสง่างามของพื้นที่\n\n"+
+                "นี่คือบันได แต่ทําไมถึงใช้พญานาค\n"+
+                "ในคติความเชื่อทางพระพุทธศาสนา พญานาคเป็นสัตว์ในตำนานที่มีความเกี่ยวข้องกับ พระพุทธศาสนา และ มักถูกนำ มาใช้เป็นองค์ ประกอบในการตกแต่งศาสนสถาน โดยเฉพาะบริเวณบันไดหรือทางเข้าสู่อาคาร เพื่อสื่อถึงการเดินทางเข้าสู่พื้นที่ศักดิ์สิทธิ์ ดังนั้นบันไดพญานาคจึงไม่ได้มีเพียงความสวยงาม แต่ยังช่วยสร้างบรรยากาศและแสดงความรู้สึกเคารพต่อสถานที่ทางพระพุทธศาสนา";
+        } else {
+
+            infoTitle.textContent =
+                "Stairs of Wat Kaew Korawaram";
+
+            infoDescription.textContent =
+                "Distinctive Features of the Temple\n"+
+                "One of the most eye-catching features in front of the ordination hall is the long staircase leading up the hill. The staircase is divided into three sections and decorated with intricate Naga motifs, adding beauty and uniqueness to Kaew Korawaram Temple.\n\n"+
+                "Naga Motifs\n"+
+                "The three sections feature detailed Naga designs. The Naga is a common symbol in Buddhist art, often found at the entrances of religious sites. It represents sacredness, dignity, and elegance.\n\n"+
+                "Why Are Naga Motifs Used on the Staircase?\n"+
+                "This is the staircase, but why are Naga motifs used here?\n"+
+                "The Naga is a mythical creature associated with Buddhism and is commonly used in Buddhist architecture, especially on staircases and entrances. It symbolizes the journey from the ordinary world into a sacred space.";
+
+        }
+
+    }
+
+
+    if (currentInfoType === "temple") {
+
+        if (currentLanguage === "th") {
+
+            infoTitle.textContent =
+                "พระอุโบสถ";
+
+            infoDescription.textContent =
+               "จุดเด่นของพระอุโบสถ\n"+
+                "เบื้องหน้าคือพระอุโบสถสีขาวหลังใหญ่ หนึ่งในจุดเด่นด้านสถาปัตยกรรมของวัดแก้วโกรวาราม ตัวอาคารตั้งอยู่บนเนินดิน ทำให้ดูโดดเด่นและสง่างามเมื่อมองจากด้านล่าง โดยรอบมีเสาโคมไฟที่ออกแบบให้กลมกลืนกับรูปแบบของพระอุโบสถ\n"+
+                "เมื่อเข้ามาภายใน สิ่งแรกที่ดึงดูดสายตาคือ พระประธานปางมารวิชัย ซึ่งประดิษฐานอยู่ภายในพระอุโบสถ สามารถหยุดชมรายละเอียดขององค์พระและบรรยากาศโดยรอบ ก่อนเดินชมจิตรกรรมฝาผนังที่อยู่โดยรอบ\n"+
+                "จิตรกรรมเหล่านี้ไม่ได้มีไว้เพียงเพื่อความสวยงาม แต่ยังทำหน้าที่ถ่ายทอดเรื่องราวและคติความเชื่อทางพระพุทธศาสนา เปรียบเสมือนหนังสือที่เล่าเรื่องผ่านภาพ โดยมีเรื่องราวสำคัญ เช่น พระแม่ธรณีบีบมวยผม การประสูติของพระศาสดา และพระโพธิสัตว์บนสวรรค์ชั้นดุสิต\n"+
+                "ภาพ พระแม่ธรณีบีบมวยผม เล่าถึงเหตุการณ์ก่อนพระพุทธเจ้าตรัสรู้ เมื่อพญามารเข้ามาขัดขวางการบำเพ็ญเพียร พระแม่ธรณีจึงปรากฏกายและบีบมวยผม ปล่อยสายน้ำจากบุญกุศลที่สะสมไว้ จนสามารถเอาชนะเหล่ามารได้ สื่อถึงพลังของความดีและบุญกุศล\n"+
+                "ภาพ การประสูติของพระศาสดา ถ่ายทอดเรื่องราวการประสูติของเจ้าชายสิทธัตถะ พระราชโอรสของพระเจ้าสุทโธทนะและพระนางสิริมหามายา ณ สวนลุมพินีวัน ซึ่งถือเป็นจุดเริ่มต้นของพุทธประวัติและเส้นทางสู่การตรัสรู้\n"+
+                "ส่วนภาพ พระโพธิสัตว์บนสวรรค์ชั้นดุสิต แสดงถึงช่วงเวลาก่อนที่พระโพธิสัตว์จะเสด็จลงมาประสูติเป็นเจ้าชายสิทธัตถะ ตามคติทางพระพุทธศาสนา พระองค์ประทับอยู่บนสวรรค์ชั้นดุสิต ก่อนเสด็จลงมายังโลกมนุษย์เพื่อบำเพ็ญพระบารมีและตรัสรู้เป็นพระพุทธเจ้า\n"+
+                "ดังนั้น เมื่อเดินชมพระอุโบสถแห่งนี้ อย่ามองเพียงความสวยงามของสถาปัตยกรรม แต่ลองสังเกตเรื่องราวบนผนัง เพราะทุกภาพล้วนมีความหมายและช่วยให้เราเรียนรู้พุทธประวัติผ่านงานจิตรกรรมได้อย่างน่าสนใจ";
+ 
+
+        } else {
+
+            infoTitle.textContent =
+                "inside the ordination hall";
+
+            infoDescription.textContent =
+                "In front of you is the large white ordination hall, one of the architectural highlights of Wat Kaew Korawaram. The building stands on an elevated area, making it look especially impressive and elegant when viewed from below. Around the hall, you can also notice a series of lamp posts designed to blend beautifully with the architecture.\n"+
+                "As you enter the hall, the first thing that catches your attention is the large principal Buddha image in the Mara-Vijaya posture. You can take a moment to admire the details of the Buddha image and the peaceful atmosphere before looking around at the murals on the walls."+
+                "The walls are covered with beautiful Buddhist paintings. These murals are not only decorative, but also tell important stories and beliefs in Buddhism. They can be seen as a visual book that allows visitors to learn about Buddhist history through art."+
+                "One important mural is “Mother Earth Wringing Her Hair.” According to Buddhist tradition, before the Buddha attained enlightenment, Mara and his followers tried to disturb his meditation. Mother Earth appeared and wrung the water from her hair, representing the accumulated merit of people’s good deeds. The flowing water defeated the forces of Mara and symbolized the power of goodness and merit overcoming obstacles."+
+                "Another important scene is the Birth of the Buddha, depicting the birth of Prince Siddhartha, the son of King Suddhodana and Queen Maya, at Lumbini Garden. This event marks the beginning of the Buddha’s life story and his journey toward enlightenment."+
+                "You can also see the Bodhisattva in Tushita Heaven. According to Buddhist belief, before being born as Prince Siddhartha, the Bodhisattva resided in Tushita Heaven. When the time was right, he descended to the human world to fulfill his path and eventually attain enlightenment as the Buddha."+
+                "As you walk around the ordination hall, take a closer look at the murals. Each painting has its own meaning and helps tell the story of Buddhism through art, making the visit more than just an appreciation of the building’s beauty.";
+
+        }
+
+    }
+}
+
+
+
+        /* =================================
+           ANIMATION
+        ================================= */
+
+        function animate() {
+
+    requestAnimationFrame(animate);
+
+    if (!renderer || !scene || !camera)
+        return;
+
+    if (sphere) {
+        sphere.rotation.y = rotationX;
+        sphere.rotation.x = rotationY;
+
+        sphere.updateMatrixWorld();
+
+        updateHotspots();
+    }
+
+    renderer.render(scene, camera);
+}
+
+
+    /*updateteleport*/
+    function updateHotspots() {
+
+    hotspots.forEach(hotspot => {
+
+        const vector =
+            hotspot.position.clone();
+
+        // ให้ตำแหน่ง hotspot หมุนไปพร้อมกับ Sphere
+        vector.applyMatrix4(
+            sphere.matrixWorld
+        );
+
+        vector.project(camera);
+
+        const x =
+            (vector.x * 0.5 + 0.5)
+            * window.innerWidth;
+
+        const y =
+            (-vector.y * 0.5 + 0.5)
+            * window.innerHeight;
+
+        hotspot.element.style.left =
+            x + "px";
+
+        hotspot.element.style.top =
+            y + "px";
+
+        hotspot.element.style.display =
+            vector.z < 1
+                ? "flex"
+                : "none";
+    });
+}
+
+
+        /* =================================
+           MOUSE
+        ================================= */
+
+        panorama.addEventListener(
+            "mousedown",
+            function(e) {
+
+                isDragging = true;
+
+                previousX =
+                    e.clientX;
+
+                previousY =
+                    e.clientY;
+
+            }
+        );
+
+
+        panorama.addEventListener(
+            "mousemove",
+            function(e) {
+
+                if (!isDragging)
+                    return;
+
+
+                const deltaX =
+                    e.clientX -
+                    previousX;
+
+
+                const deltaY =
+                    e.clientY -
+                    previousY;
+
+
+                rotationX +=
+                    deltaX * 0.005;
+
+
+                rotationY +=
+                    deltaY * 0.005;
+
+
+                rotationY =
+                    Math.max(
+                        -Math.PI / 2,
+                        Math.min(
+                            Math.PI / 2,
+                            rotationY
+                        )
+                    );
+
+
+                previousX =
+                    e.clientX;
+
+                previousY =
+                    e.clientY;
+
+            }
+        );
+
+
+        window.addEventListener(
+            "mouseup",
+            function() {
+
+                isDragging = false;
+
+            }
+        );
+
+
+
+        /* =================================
+           TOUCH
+        ================================= */
+
+        panorama.addEventListener(
+            "touchstart",
+            function(e) {
+
+                if (
+                    e.touches.length !== 1
+                )
+                    return;
+
+
+                isDragging = true;
+
+
+                previousX =
+                    e.touches[0].clientX;
+
+                previousY =
+                    e.touches[0].clientY;
+
+            }
+        );
+
+
+        panorama.addEventListener(
+            "touchmove",
+            function(e) {
+
+                if (!isDragging)
+                    return;
+
+
+                const touch =
+                    e.touches[0];
+
+
+                const deltaX =
+                    touch.clientX -
+                    previousX;
+
+
+                const deltaY =
+                    touch.clientY -
+                    previousY;
+
+
+                rotationX +=
+                    deltaX * 0.005;
+
+
+                rotationY +=
+                    deltaY * 0.005;
+
+
+                rotationY =
+                    Math.max(
+                        -Math.PI / 2,
+                        Math.min(
+                            Math.PI / 2,
+                            rotationY
+                        )
+                    );
+
+
+                previousX =
+                    touch.clientX;
+
+                previousY =
+                    touch.clientY;
+
+            }
+        );
+
+
+        panorama.addEventListener(
+            "touchend",
+            function() {
+
+                isDragging = false;
+
+            }
+        );
+
+
+
+        /* =================================
+           CLOSE
+        ================================= */
+
+        history360.addEventListener(
+    "click",
+    function(e) {
+
+        e.stopPropagation();
+
+        historyModal.classList.add("active");
+
+    }
+);
+
+
+closeHistory.addEventListener(
+    "click",
+    function() {
+
+        historyModal.classList.remove("active");
+
+    }
+);
+
+closeInfo.addEventListener(
+    "click",
+    function() {
+
+        infoModal.classList.remove("active");
+
+        resetInfoAudio();
+
+    }
+);
+
+infoModal.addEventListener(
+    "click",
+    function(e) {
+
+        if (e.target === infoModal) {
+
+            infoModal.classList.remove("active");
+
+            resetInfoAudio();
+
+        }
+
+    }
+);
+
+
+
+historyModal.addEventListener(
+    "click",
+    function(e) {
+
+        if (e.target === historyModal) {
+
+            historyModal.classList.remove("active");
+
+        }
+
+    }
+);
+
+
+        /* ESC */
+
+        document.addEventListener(
+    "keydown",
+    function(e) {
+
+        if (e.key === "Escape") {
+
+    if (infoModal.classList.contains("active")) {
+
+        infoModal.classList.remove("active");
+
+        resetInfoAudio();
+
+    } else if (historyModal.classList.contains("active")) {
+
+        historyModal.classList.remove("active");
+
+    } else {
+
+        viewer.classList.remove("active");
+
+    }
+
+}
+
+    }
+);
+
+
+
+        /* =================================
+           RESIZE
+        ================================= */
+
+        window.addEventListener(
+            "resize",
+            function() {
+
+                if (
+                    !camera ||
+                    !renderer
+                )
+                    return;
+
+
+                camera.aspect =
+                    window.innerWidth /
+                    window.innerHeight;
+
+
+                camera.updateProjectionMatrix();
+
+
+                renderer.setSize(
+                    window.innerWidth,
+                    window.innerHeight
+                );
+
+            }
+        );
+
+
+/* =================================
+   PAGE LOADING + SOUND
+================================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        const loader =
+            document.getElementById("loader");
+
+        const mainContent =
+            document.getElementById("main-content");
+
+        const welcomeSound =
+            document.getElementById("welcomeSound");
+
+
+        /* ระดับเสียง */
+
+        welcomeSound.volume = 0.1;
+
+
+        /* ป้องกันการทำงานซ้ำ */
+
+        let started = false;
+
+
+        /* =================================
+           START WEBSITE
+        ================================= */
+
+        function startWebsite() {
+
+            if (started)
+                return;
+
+            started = true;
+
+
+            /* เล่นเสียง */
+
+            welcomeSound.currentTime = 0;
+
+            welcomeSound.play().catch(error => {
+
+                console.log(
+                    "ไม่สามารถเล่นเสียงได้:",
+                    error
+                );
+
+            });
+
+
+            /* เริ่มเวลา Loader */
+
+            setTimeout(
+                () => {
+
+                    mainContent.classList.add(
+                        "show"
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            loader.classList.add(
+                                "hide"
+                            );
+
+
+                            setTimeout(
+                                () => {
+
+                                    open360(
+                                        "panorama/stieg.png",
+                                        Math.PI * 1.2
+                                    );
+
+                                },
+                                1200
+                            );
+
+                        },
+                        300
+                    );
+
+                },
+                2000
+            );
+        }
+
+
+        /* =================================
+           CLICK LOADER
+        ================================= */
+
+        loader.addEventListener(
+            "click",
+            startWebsite,
+            { once: true }
+        );
+
+
+        /* =================================
+           TOUCH MOBILE
+        ================================= */
+
+        loader.addEventListener(
+            "touchstart",
+            startWebsite,
+            { once: true }
+        );
+
+
+        /* =================================
+           AUTO TRY
+        ================================= */
+
+        welcomeSound.play().then(() => {
+
+            /*
+                ถ้า Browser อนุญาต
+                ให้เริ่มเว็บไซต์อัตโนมัติ
+            */
+
+            startWebsite();
+
+        }).catch(() => {
+
+            /*
+                ถ้า Browser บล็อกเสียง
+                รอผู้ใช้คลิก Loader
+            */
+
+            console.log(
+                "กรุณาคลิกหน้าจอเพื่อเปิดเสียง"
+            );
+
+        });
+
+    }
+);
+    
+
+animate();
+setLanguage("th");
+    </script>
+
+</body>
+
+</html>
