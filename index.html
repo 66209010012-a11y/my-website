@@ -1713,19 +1713,19 @@
         <source src="sound/rakang.mp3" type="audio/mpeg">
     </audio>
     
-    <audio id="stairsSoundTH" preload="auto">
+    <audio id="stairsSoundTH" preload="none">
         <source src="sound/thstair.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="stairsSoundEN" preload="auto">
+    <audio id="stairsSoundEN" preload="none">
         <source src="sound/enstair.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="templeSoundTH" preload="auto">
+    <audio id="templeSoundTH" preload="none">
         <source src="sound/thentrance.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="templeSoundEN" preload="auto">
+    <audio id="templeSoundEN" preload="none">
         <source src="sound/enentrance.mp3" type="audio/mpeg">
     </audio>
 
@@ -2360,7 +2360,7 @@ stairsAudioButton.onclick =
 
 
             renderer.setPixelRatio(
-            Math.min(window.devicePixelRatio, 2)
+            Math.min(window.devicePixelRatio, 1.5)
             );
 
 
@@ -2393,8 +2393,8 @@ stairsAudioButton.onclick =
                     const geometry =
                         new THREE.SphereGeometry(
                             500,
-                            60,
-                            40
+                            48,
+                            32
                         );
 
 
